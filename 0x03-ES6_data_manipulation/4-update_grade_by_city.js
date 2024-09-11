@@ -1,19 +1,10 @@
-/* eslint-disable */
-function updateStudentGradeByCity(students, city, newGrades) {
-    const studentsInCity = students.filter((student) => student.location === city);
-    return studentsInCity.map((student) => {
-      const filteredGrades = newGrades.filter((grade) => grade.studentId === student.id);
-      if (filteredGrades.length > 0) {
-        return {
-          ...student,
-          grade: filteredGrades[0].grade,
-        };
-      }
-      return {
-        ...student,
-        grade: 'N/A',
-      };
-    });
-  }
-  
-  export default updateStudentGradeByCity;
+export default function updateStudentGradeByCity(students, city, newGrade) {
+  const newArray = students.map((student) => {
+    const studentGrade = newGrade.filter((grade) => grade.studentId === student.id)
+      .map((grade) => grade.grade)[0];
+    // eslint-disable-next-line no-param-reassign
+    student.grade = studentGrade || 'N/A';
+    return student;
+  });
+  return newArray.filter((student) => student.location === city);
+}
